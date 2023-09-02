@@ -1,13 +1,14 @@
 import Address from "./address";
 
-class Custumer {
+export default class Customer {
   _id: string;
   _name: string;
   _address: Address;
   _active: boolean = false;
 
-  constructor(id: string) {
+  constructor(id: string, name: string) {
     this._id = id;
+    this._name = name;
   }
 
   changeName(name: string) {
