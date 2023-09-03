@@ -18,17 +18,21 @@ describe("Order unit test", () => {
     }).toThrowError("Items are required");
   });
   it("Should calculate total", () => {
-    const item = new OrderItem("i1", "Item 1", 100);
-    const item2 = new OrderItem("i2", "Item 2", 200);
+    const item = new OrderItem("i1", "Item 1", 100, "p1", 2);
+    const item2 = new OrderItem("i2", "Item 2", 100, "p2", 2);
 
     const order = new Order("o1", "Order1", [item]);
     let total = order.total();
-    expect(total).toBe(100);
+    expect(total).toBe(200);
 
     const order2 = new Order("o1", "Order1", [item, item2]);
     total = order2.total();
-    expect(total).toBe(300);
-
-
+    expect(total).toBe(400);
+  });
+  it("Should throw error if the item less or equal zero", () => {
+    expect(() => {
+      const item = new OrderItem("i1", "Item", 100, "p1", 0);
+      const order = new Order("o1", "c1", [item]);
+    }).toThrowError("Quantity must be greater than 0");
   });
 });
