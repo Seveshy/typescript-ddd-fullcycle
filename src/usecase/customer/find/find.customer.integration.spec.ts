@@ -6,7 +6,7 @@ import Address from "../../../domain/customer/value-object/address";
 import FindCustomerUseCase from "./find.customer.usecase";
 
 describe("Test find customer use case", () => {
-    let sequelize: Sequelize;
+  let sequelize: Sequelize;
 
   beforeEach(async () => {
     sequelize = new Sequelize({
@@ -16,7 +16,7 @@ describe("Test find customer use case", () => {
       sync: { force: true },
     });
 
-    sequelize.addModels([CustomerModel]);
+    await sequelize.addModels([CustomerModel]);
     await sequelize.sync();
   });
 
@@ -25,30 +25,32 @@ describe("Test find customer use case", () => {
   });
 
   it("should find a customer", async () => {
-     const customerRepository = new CustomerRepository();
-     const usecase = new FindCustomerUseCase(customerRepository);
+    const customerRepository = new CustomerRepository();
+    const usecase = new FindCustomerUseCase(customerRepository);
 
-     const customer = new Customer("123", "John");
-     const address = new Address("Street", 123, "Zip", "City");
-     customer.changeAddress(address);
-     await customerRepository.create(customer);
+    const customer = new Customer("123", "John");
+    const address = new Address("Street", 123, "Zip", "City");
+    customer.changeAddress(address);
 
-     const input = {
-        id: "123"
-     }
+    await customerRepository.create(customer);
 
-     const output = {
-        id: "123",
-        name: "John",
-        address: {
-            street: "Street",
-            city: "City",
-            number: 123,
-            zip: "Zip"
-        }
-     }
+    const input = {
+      id: "123",
+    };
 
-     const result = usecase.execute(input);
-     expect(result).toEqual(output);
-  })
-})
+    const output = {
+      id: "123",
+      name: "John",
+      address: {
+        street: "Street",
+        city: "City",
+        number: 123,
+        zip: "Zip",
+      },
+    };
+
+    const result = await usecase.execute(input);
+
+    expect(result).toEqual(output);
+  });
+});
