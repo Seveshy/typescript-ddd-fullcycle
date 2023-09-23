@@ -31,7 +31,7 @@ export default class Address {
 
   validate() {
     if (this._street.length === 0) {
-      throw new Error("Name is required");
+      throw new Error("Street is required");
     }
     if (this._number === 0) {
       throw new Error("Number is required");
