@@ -22,14 +22,14 @@ describe("Customer unit test", () => {
     const address = new Address("Street", 1, "56456-55", "São Paulo");
     customer.Address = address;
 
-    expect(customer.isActivate()).toBe(false);
+    expect(customer.isActive()).toBe(false);
   });
   it("Should desactivate customer", () => {
     const customer = new Customer("1", "Customer 1");
 
     customer.desactivate();
 
-    expect(customer.isActivate()).toBe(false);
+    expect(customer.isActive()).toBe(false);
   });
   it("Should throw error when address is undefined when you activate a customer", () => {
     expect(() => {

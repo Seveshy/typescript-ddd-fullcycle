@@ -1,6 +1,6 @@
 import Customer from "../../../../domain/customer/entity/customer";
-import Address from "../../../../domain/customer/value-object/address";
 import CustomerRepositoryInterface from "../../../../domain/customer/repository/costumer-repository.interface";
+import Address from "../../../../domain/customer/value-object/address";
 import CustomerModel from "./customer.model";
 
 export default class CustomerRepository implements CustomerRepositoryInterface {
@@ -12,7 +12,7 @@ export default class CustomerRepository implements CustomerRepositoryInterface {
       number: entity.Address.number,
       zipcode: entity.Address.zip,
       city: entity.Address.city,
-      active: entity.isActivate(),
+      active: entity.isActive(),
       rewardPoints: entity.rewardPoints,
     });
   }
@@ -25,7 +25,7 @@ export default class CustomerRepository implements CustomerRepositoryInterface {
         number: entity.Address.number,
         zipcode: entity.Address.zip,
         city: entity.Address.city,
-        active: entity.isActivate(),
+        active: entity.isActive(),
         rewardPoints: entity.rewardPoints,
       },
       {
@@ -40,7 +40,9 @@ export default class CustomerRepository implements CustomerRepositoryInterface {
     let customerModel;
     try {
       customerModel = await CustomerModel.findOne({
-        where: { id },
+        where: {
+          id,
+        },
         rejectOnEmpty: true,
       });
     } catch (error) {
@@ -61,23 +63,22 @@ export default class CustomerRepository implements CustomerRepositoryInterface {
   async findAll(): Promise<Customer[]> {
     const customerModels = await CustomerModel.findAll();
 
-    return customerModels.map((customerModel) => {
-      const customer = new Customer(customerModel.id, customerModel.name);
-      customer.addRewardPoints(customerModel.rewardPoints);
-
+    const customers = customerModels.map((customerModels) => {
+      let customer = new Customer(customerModels.id, customerModels.name);
+      customer.addRewardPoints(customerModels.rewardPoints);
       const address = new Address(
-        customerModel.street,
-        customerModel.number,
-        customerModel.zipcode,
-        customerModel.city
+        customerModels.street,
+        customerModels.number,
+        customerModels.zipcode,
+        customerModels.city
       );
       customer.changeAddress(address);
-
-      if (customerModel.active) {
+      if (customerModels.active) {
         customer.activate();
       }
-
       return customer;
     });
+
+    return customers;
   }
 }

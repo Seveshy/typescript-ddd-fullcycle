@@ -43,7 +43,7 @@ export default class Customer {
     this.validate();
   }
 
-  isActivate(): boolean {
+  isActive(): boolean {
     return this._active;
   }
 

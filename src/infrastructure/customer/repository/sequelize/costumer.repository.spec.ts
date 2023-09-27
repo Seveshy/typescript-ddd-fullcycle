@@ -35,7 +35,7 @@ describe("Customer repository test", () => {
     expect(customerModel?.toJSON()).toStrictEqual({
       id: "1",
       name: customer.name,
-      active: customer.isActivate(),
+      active: customer.isActive(),
       rewardPoints: customer.rewardPoints,
       street: address.street,
       number: address.number,
@@ -58,7 +58,7 @@ describe("Customer repository test", () => {
     expect(customerModel?.toJSON()).toStrictEqual({
       id: "1",
       name: customer.name,
-      active: customer.isActivate(),
+      active: customer.isActive(),
       rewardPoints: customer.rewardPoints,
       street: address.street,
       number: address.number,
