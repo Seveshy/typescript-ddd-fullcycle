@@ -9,7 +9,7 @@ export interface InputUpdateCustomerDto {
     }
 }
 
-export interface OutpuUpdateCustomerDto {
+export interface OutputUpdateCustomerDto {
     id: string;
     name: string;
     address: {
