@@ -10,8 +10,8 @@ export default class CustomerYupValidator
       yup
         .object()
         .shape({
-          id: yup.string().required("Id is required"),
           name: yup.string().required("Name is required"),
+          id: yup.string().required("Id is required"),
         })
         .validateSync(
           {
